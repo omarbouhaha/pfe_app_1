@@ -1,0 +1,636 @@
+{
+  "preprocessing": {
+    "dataCleaning": {
+      "title": "Data Cleaning",
+      "operations": [
+        {
+          "name": "Clean Missing Values",
+          "order": 1,
+          "apply": false,
+          "method": "",
+          "options": [
+            {
+              "name": "Fill with specific value",
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "name": "Forward Fill",
+              "parameters": []
+            },
+            {
+              "name": "Backward Fill",
+              "parameters": []
+            },
+            {
+              "name": "Interpolate",
+              "parameters": [
+                {
+                  "name": "order",
+                  "type": "number"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Handle Outliers",
+          "order": 2,
+          "apply": false,
+          "options": [
+            {
+              "name": "Z-Score",
+              "parameters": [
+                {
+                  "name": "threshold (number of standard deviations)",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "name": "IQR Score",
+              "parameters": [
+                {
+                  "name": "IQR coafficient",
+                  "type": "number"
+                }
+              ]
+            },
+            {
+              "name": "Isolation Forest",
+              "parameters": [
+                {
+                  "name": "contamination",
+                  "type": "number"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Handle Noise",
+          "order": 3,
+          "apply": false,
+          "options": [
+            {
+              "name": "Smoothing",
+              "options": [
+                {
+                  "name": "Moving Average",
+                  "parameters": [
+                    {
+                      "name": "window_size",
+                      "type": "number"
+                    }
+                  ]
+                },
+                {
+                  "name": "Exponential Smoothing",
+                  "parameters": [
+                    {
+                      "name": "smoothing_level",
+                      "type": "number"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Binning",
+              "parameters": [
+                {
+                  "name": "number of bins",
+                  "type": "number"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Normalize Data",
+          "order": 4,
+          "apply": false,
+          "options": [
+            {
+              "name": "Min-Max",
+              "parameters": []
+            },
+            {
+              "name": "Z-Score",
+              "parameters": []
+            },
+            {
+              "name": "Decimal Scaling",
+              "parameters": []
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "charts": [
+    {
+      "id": 1,
+      "type": "line",
+      "options": [
+        "Zoomable Timeseries",
+        "Brush chart",
+        "Syncing chart"
+      ],
+      "components": [
+        "ZoomableTimeSeriesApex",
+        "BrushChartApex",
+        "SyncingChartApex"
+      ],
+      "isMultiLines": [
+        false,
+        false,
+        true
+      ]
+    },
+    {
+      "id": 2,
+      "type": "area",
+      "options": [
+        "Spline Area"
+      ],
+      "components": [
+        "SplineAreaApex"
+      ],
+      "isMultiLines": [
+        true
+      ]
+    }
+  ],
+  "userCharts": [
+    {
+      "id": "44b492ec-98f4-4929-8aba-d7bdcfe623e7",
+      "type": "Spline Area",
+      "component": "SplineAreaApex",
+      "dataset": "3_EWM_alpha06_resampled_EWM_alpha06_20230818212539.csv",
+      "datasetId": "4973d2753e619c8e251b34d08c883ed6d5a9c6abfdd16c1461edd0d9a3613650",
+      "column": [
+        "Global_active_power",
+        "predictions"
+      ],
+      "xAxisLabel": "Date Time",
+      "yAxisLabel": [
+        "Global_active_power",
+        "predictions"
+      ]
+    },
+    {
+      "id": "b4e4ccdd-b0d1-4da7-82b6-752c4ad38536",
+      "type": "Syncing chart",
+      "component": "SyncingChartApex",
+      "dataset": "3_EWM_alpha06_resampled_EWM_alpha06_20230818212539.csv",
+      "datasetId": "4973d2753e619c8e251b34d08c883ed6d5a9c6abfdd16c1461edd0d9a3613650",
+      "column": [
+        "Global_active_power",
+        "predictions"
+      ],
+      "xAxisLabel": "Date Time",
+      "yAxisLabel": [
+        "Global_active_power",
+        "predictions"
+      ]
+    }
+  ],
+  "ml_models": {
+    "xgboost": {
+      "basic": {
+        "n_estimators": {
+          "type": "integer",
+          "default": 100,
+          "min": 10,
+          "max": 1000
+        },
+        "learning_rate": {
+          "type": "float",
+          "default": 0.1,
+          "min": 0.001,
+          "max": 1
+        }
+      },
+      "advanced": {
+        "max_depth": {
+          "type": "integer",
+          "default": 6,
+          "min": 1,
+          "max": 10
+        },
+        "subsample": {
+          "type": "float",
+          "default": 1,
+          "min": 0.1,
+          "max": 1
+        },
+        "colsample_bytree": {
+          "type": "float",
+          "default": 1,
+          "min": 0.1,
+          "max": 1
+        },
+        "objective": {
+          "type": "select",
+          "options": [
+            "reg:squarederror",
+            "binary:logistic",
+            "multi:softmax"
+          ],
+          "default": "reg:squarederror"
+        }
+      }
+    },
+    "linear_regression": {
+      "basic": {
+        "fit_intercept": {
+          "type": "boolean",
+          "default": true
+        },
+        "normalize": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+    "svr": {
+      "basic": {
+        "C": {
+          "type": "float",
+          "default": 1,
+          "min": 0.1,
+          "max": 10
+        },
+        "kernel": {
+          "type": "select",
+          "options": [
+            "linear",
+            "poly",
+            "rbf",
+            "sigmoid"
+          ],
+          "default": "rbf"
+        }
+      },
+      "advanced": {
+        "degree": {
+          "type": "integer",
+          "default": 3,
+          "min": 1,
+          "max": 10
+        },
+        "gamma": {
+          "type": "select",
+          "options": [
+            "scale",
+            "auto"
+          ],
+          "default": "scale"
+        },
+        "coef0": {
+          "type": "float",
+          "default": 0
+        },
+        "shrinking": {
+          "type": "boolean",
+          "default": true
+        },
+        "epsilon": {
+          "type": "float",
+          "default": 0.1
+        }
+      }
+    },
+    "random_forest_regression": {
+      "basic": {
+        "n_estimators": {
+          "type": "integer",
+          "default": 100,
+          "min": 10,
+          "max": 1000
+        },
+        "max_depth": {
+          "type": "integer",
+          "default": null,
+          "min": 1,
+          "max": 100
+        },
+        "min_samples_split": {
+          "type": "integer",
+          "default": 2,
+          "min": 1,
+          "max": 50
+        }
+      },
+      "advanced": {
+        "min_samples_leaf": {
+          "type": "integer",
+          "default": 1,
+          "min": 1,
+          "max": 50
+        },
+        "max_features": {
+          "type": "select",
+          "options": [
+            "auto",
+            "sqrt",
+            "log2"
+          ],
+          "default": "auto"
+        },
+        "bootstrap": {
+          "type": "boolean",
+          "default": true
+        },
+        "oob_score": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    }
+  },
+  "dl_models": {
+    "ann_timeseries": {
+      "basic": {
+        "input_sequence_length": {
+          "type": "number",
+          "default": 10,
+          "min": 1,
+          "max": 365
+        },
+        "output_sequence_length": {
+          "type": "number",
+          "default": 1,
+          "min": 1,
+          "max": 365
+        },
+        "hidden_layers": {
+          "type": "number",
+          "default": 2,
+          "min": 1,
+          "max": 10
+        },
+        "units_per_hidden_layer": {
+          "type": "number",
+          "default": [
+            64,
+            64
+          ],
+          "min": 8,
+          "max": 512
+        },
+        "activation": {
+          "type": "select",
+          "options": [
+            "relu",
+            "tanh",
+            "sigmoid"
+          ],
+          "default": "relu"
+        }
+      },
+      "advanced": {
+        "dropout_rate": {
+          "type": "number",
+          "default": 0.5,
+          "min": 0.1,
+          "max": 0.9
+        },
+        "optimizer": {
+          "type": "select",
+          "options": [
+            "adam",
+            "sgd",
+            "rmsprop"
+          ],
+          "default": "adam"
+        },
+        "learning_rate": {
+          "type": "number",
+          "default": 0.001,
+          "min": 0.0001,
+          "max": 1
+        }
+      }
+    },
+    "lstm_timeseries": {
+      "basic": {
+        "input_sequence_length": {
+          "type": "number",
+          "default": 10,
+          "min": 1,
+          "max": 365
+        },
+        "output_sequence_length": {
+          "type": "number",
+          "default": 1,
+          "min": 1,
+          "max": 365
+        },
+        "hidden_layers": {
+          "type": "number",
+          "default": 2,
+          "min": 1,
+          "max": 5
+        },
+        "units_per_hidden_layer": {
+          "type": "number",
+          "default": [
+            64,
+            64
+          ],
+          "min": 8,
+          "max": 256
+        },
+        "activation": {
+          "type": "select",
+          "options": [
+            "relu",
+            "tanh",
+            "sigmoid"
+          ],
+          "default": "relu"
+        }
+      },
+      "advanced": {
+        "return_sequences": {
+          "type": "boolean",
+          "default": false
+        },
+        "dropout": {
+          "type": "number",
+          "default": 0.2,
+          "min": 0.1,
+          "max": 0.5
+        },
+        "recurrent_dropout": {
+          "type": "number",
+          "default": 0.2,
+          "min": 0.1,
+          "max": 0.5
+        }
+      }
+    },
+    "gru_timeseries": {
+      "basic": {
+        "input_sequence_length": {
+          "type": "number",
+          "default": 10,
+          "min": 1,
+          "max": 365
+        },
+        "output_sequence_length": {
+          "type": "number",
+          "default": 1,
+          "min": 1,
+          "max": 365
+        },
+        "hidden_layers": {
+          "type": "number",
+          "default": 2,
+          "min": 1,
+          "max": 5
+        },
+        "units_per_hidden_layer": {
+          "type": "number",
+          "default": [
+            64,
+            64
+          ],
+          "min": 8,
+          "max": 256
+        },
+        "activation": {
+          "type": "select",
+          "options": [
+            "relu",
+            "tanh",
+            "sigmoid"
+          ],
+          "default": "tanh"
+        }
+      },
+      "advanced": {
+        "return_sequences": {
+          "type": "boolean",
+          "default": false
+        },
+        "dropout": {
+          "type": "number",
+          "default": 0.2,
+          "min": 0.1,
+          "max": 0.5
+        },
+        "recurrent_dropout": {
+          "type": "number",
+          "default": 0.2,
+          "min": 0.1,
+          "max": 0.5
+        }
+      }
+    },
+    "rnn_timeseries": {
+      "basic": {
+        "input_sequence_length": {
+          "type": "integer",
+          "default": 10,
+          "min": 1,
+          "max": 365
+        },
+        "output_sequence_length": {
+          "type": "number",
+          "default": 1,
+          "min": 1,
+          "max": 365
+        },
+        "hidden_layers": {
+          "type": "number",
+          "default": 2,
+          "min": 1,
+          "max": 5
+        },
+        "units_per_hidden_layer": {
+          "type": "number",
+          "default": [
+            64,
+            64
+          ],
+          "min": 8,
+          "max": 256
+        },
+        "activation": {
+          "type": "select",
+          "options": [
+            "relu",
+            "tanh",
+            "sigmoid"
+          ],
+          "default": "tanh"
+        }
+      },
+      "advanced": {
+        "return_sequences": {
+          "type": "boolean",
+          "default": false
+        },
+        "dropout": {
+          "type": "number",
+          "default": 0.2,
+          "min": 0.1,
+          "max": 0.5
+        }
+      }
+    }
+  },
+  "scalers": {
+    "minmax": {
+      "feature_range": {
+        "type": "list",
+        "default": [
+          0,
+          1
+        ],
+        "labels": [
+          "Min",
+          "Max"
+        ]
+      }
+    },
+    "standard": {
+      "with_mean": {
+        "type": "boolean",
+        "default": true
+      },
+      "with_std": {
+        "type": "boolean",
+        "default": true
+      }
+    },
+    "robust": {
+      "quantile_range": {
+        "type": "list",
+        "default": [
+          25,
+          75
+        ],
+        "labels": [
+          "Q1",
+          "Q3"
+        ]
+      },
+      "with_centering": {
+        "type": "boolean",
+        "default": true
+      },
+      "with_scaling": {
+        "type": "boolean",
+        "default": true
+      }
+    }
+  }
+}

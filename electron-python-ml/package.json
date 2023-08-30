@@ -1,0 +1,78 @@
+{
+  "name": "react-electron",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@electron/remote": "^2.0.10",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.5",
+    "@mui/icons-material": "^5.14.1",
+    "@mui/joy": "^5.0.0-alpha.88",
+    "@mui/material": "^5.14.1",
+    "@mui/x-data-grid": "^6.10.2",
+    "@reduxjs/toolkit": "^1.9.5",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "apexcharts": "^3.41.0",
+    "axios": "^1.4.0",
+    "bootstrap": "^5.3.0",
+    "concurrently": "^8.2.0",
+    "cross-env": "^7.0.3",
+    "crypto-js": "^4.1.1",
+    "electron": "^25.3.0",
+    "json-server": "^0.17.3",
+    "papaparse": "^5.4.1",
+    "react": "^18.2.0",
+    "react-apexcharts": "^1.4.1",
+    "react-chartjs-2": "^5.2.0",
+    "react-dom": "^18.2.0",
+    "react-redux": "^8.1.1",
+    "react-router-dom": "^6.14.2",
+    "react-scripts": "5.0.1",
+    "uuid": "^9.0.0",
+    "wait-on": "^7.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "main": "public/main.js",
+  "homepage": "./",
+  "scripts": {
+    "start": "react-scripts start",
+    "server": "json-server --watch db.json --port 3001",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "electron:serve": "concurrently \"npm run server\" \"cross-env BROWSER=none yarn start\" \"yarn electron:start\"",
+    "electron:build": "",
+    "electron:start": "electron ."
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "concurrently": "^8.2.0",
+    "cross-env": "^7.0.3",
+    "electron": "^25.3.0",
+    "electron-builder": "^22.13.1",
+    "electron-devtools-installer": "^3.2.0",
+    "prettier": "^2.5.1",
+    "wait-on": "^7.0.1"
+  }
+}

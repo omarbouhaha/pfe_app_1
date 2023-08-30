@@ -1,0 +1,9 @@
+window.ipcRenderer = require('electron').ipcRenderer;
+window.fs = window.require("fs");
+window.pathModule = window.require("path");
+window.app = window.require("@electron/remote").app;
+window.remote = require('electron').remote;
+window.shell = require('electron').shell;
+window.os = window.require("os");
+window.dialog = window.require("@electron/remote").dialog;
+window.spawn = window.require("child_process").spawn;
